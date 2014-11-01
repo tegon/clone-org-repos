@@ -1,0 +1,54 @@
+{
+  "name": "clone-org-repos",
+  "description": "Clones a github organization repositories",
+  "version": "0.1.0",
+  "homepage": "https://github.com/tegon/clone-org-repos",
+  "author": {
+    "name": "Leonardo Tegon",
+    "url": "https://github.com/tegon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tegon/clone-org-repos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tegon/clone-org-repos/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tegon/clone-org-repos/blob/master/LICENSE-MIT"
+    }
+  ],
+  "keywords": [
+    "cli",
+    "command line",
+    "git",
+    "github",
+    "clone",
+    "git clone",
+    "clone repositories",
+    "github organization",
+    "github org",
+    "org repositories",
+    "organization repositories",
+    "clone organization repositories"
+  ],
+  "preferGlobal": true,
+  "bin": {
+    "cloneorg": "./bin/cloneorg"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "scripts": {
+    "test": "mocha -R test"
+  },
+  "dependencies": {
+    "request": "2.44.0",
+    "cli": "0.6.4",
+    "prompt": "0.2.14",
+    "merge": "1.2.0"
+  }
+}
