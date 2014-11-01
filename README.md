@@ -1,6 +1,9 @@
 Clone github organization repos
 ===
 
+[![NPM](https://nodei.co/npm/clone-org-repos.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/clone-org-repos/)
+
+
 This is a tool to clone all repositories from an github organization.
 This could be helpful if you work at some company, or if you contribute to an open source project.
 
@@ -93,3 +96,10 @@ cloneorg emberjs -t GITHUB_TOKEN -e website,examples # array
 ```bash
 cloneorg gruntjs -t GITHUB_TOKEN -e $-docs -r true # regexp
 ```
+
+ToDo
+---
+
+- Tests
+- Progress bar while cloning repos
+- Multiple threads
