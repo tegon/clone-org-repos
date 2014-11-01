@@ -1,19 +1,18 @@
 Clone github organization repos
 ===
 
-This is a tool to help developers to clone all github repos from an organization.
-This could be helpfull if you work at some company, or contribute to an open source project that uses a github org.
+This is a tool to clone all repositories from an github organization.
+This could be helpful if you work at some company, or if you contribute to an open source project.
 
 Why?
 ---
-I got in this situation some times, i needed to clone all repos from company that i work for,
-and in the beginning, just one line of ruby code was enough:
+I went through this a few times, I need to clone all repositories from the company where I work, and, in the beginning, this line of Ruby code was sufficient:
 
 ```ruby
 curl -s "https://api.github.com/orgs/ORG_NAME/repos?per_page=100" -u "username" | ruby -rubygems -e 'require "json"; JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
 ```
 
-But things got a little complicated. Some repositories arent used by me, they are for different teams, so, i doesn't needed then, here it comes the use for this cli.
+But things got a little complicated. Some repositories aren't used by me because they are from different times. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
 
 Usage
 ---
@@ -76,7 +75,6 @@ cloneorg angular -t GITHUB_TOKEN -o angular,material,bower-angular-i18n
 ```
 
 This can also be an regular expression, with -r or --regexp option set to true.
-This will clone all repositores that have backbone.* in the name
 
 ```bash
 cloneorg marionettejs -t GITHUB_TOKEN -o ^backbone -r true
