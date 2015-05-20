@@ -41,7 +41,13 @@ getRepositories = function(args, options) {
 };
 
 cli.main(function(args, options) {
-    if (options.token) {
+    var token = process.env.GITHUB_TOKEN || options.token;
+
+    if (token) {
+        if (!options.token) {
+            options = merge(options, { token: token });
+        }
+
         getRepositories(args, options);
     } else {
         prompt.get([{
