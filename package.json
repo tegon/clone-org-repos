@@ -46,9 +46,10 @@
     "test": "mocha -R test"
   },
   "dependencies": {
-    "request": "2.44.0",
-    "cli": "0.6.4",
+    "request": "2.55.0",
+    "cli": "0.6.6",
     "prompt": "0.2.14",
-    "merge": "1.2.0"
+    "merge": "1.2.0",
+    "node-status": "0.1.4"
   }
 }
