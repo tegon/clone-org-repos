@@ -43,12 +43,17 @@
     "node": ">=0.8"
   },
   "scripts": {
-    "test": "mocha -R test"
+    "test": "make test"
   },
   "dependencies": {
     "request": "2.55.0",
     "cli": "0.6.6",
     "prompt": "0.2.14",
     "merge": "1.2.0"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.14.1"
   }
 }
