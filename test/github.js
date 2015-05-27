@@ -47,6 +47,10 @@ describe('Organization', function() {
     });
 
     describe('Clone function', function() {
+        afterEach(function() {
+            cloneSpy.reset();
+        });
+
         describe('exclude option', function() {
             describe('regular expression mode', function() {
                 before(function() {
