@@ -43,7 +43,7 @@
     "node": ">=0.8"
   },
   "scripts": {
-    "test": "make test"
+    "test": "./node_modules/mocha/bin/mocha --reporter spec ./test"
   },
   "dependencies": {
     "request": "2.55.0",

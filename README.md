@@ -56,6 +56,12 @@ clones all github/twitter repositories, with an access token provided by Github
 cloneorg twitter -t GITHUB_TOKEN
 ```
 
+If an environment variable `GITHUB_TOKEN` is set, it will be used.
+
+```bash
+export GITHUB_TOKEN='YOUR_GITHUB_API_TOKEN'
+```
+
 Add a -p or --perpage option to paginate response
 
 ```bash
@@ -100,6 +106,4 @@ cloneorg gruntjs -t GITHUB_TOKEN -e $-docs -r true # regexp
 ToDo
 ---
 
-- Tests
 - Progress bar while cloning repos
-- Multiple threads
