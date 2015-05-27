@@ -34,4 +34,32 @@ describe('Options Validator', function() {
             validator.validateType(type).valid.should.be.true;
         });
     });
+
+    describe('Validation messages', function() {
+        it('password is not valid', function() {
+            validator.execute({
+                password: ''
+            }).message.should.include('Please provide an password');
+        });
+
+        it('exclude and only are not valid', function() {
+            validator.execute({
+                exclude: 'foo',
+                only: 'bar'
+            }).message.should.include('Exclude and only options passed. Please pass just one of them.');
+        });
+
+        it('perpage is not valid', function() {
+            validator.execute({
+                perpage: 'foo',
+                password: 'bar'
+            }).message.should.include('foo is not a number');
+        });
+
+        it('type is not valid', function() {
+            validator.execute({
+                type: 'bar'
+            }).message.should.include('bar is not a valid type');
+        });
+    });
 });
