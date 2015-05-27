@@ -43,7 +43,8 @@
     "node": ">=0.8"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --reporter spec ./test"
+    "test": "./node_modules/mocha/bin/mocha ./test/*",
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
   "dependencies": {
     "request": "2.55.0",
@@ -53,6 +54,8 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.14",
     "mocha": "^2.2.5",
     "sinon": "^1.14.1"
   }
