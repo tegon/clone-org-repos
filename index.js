@@ -58,4 +58,4 @@ cli.main(function(args, options) {
             getRepositories(args, merge(options, result));
         });
     }
-})
+});
