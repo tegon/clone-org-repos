@@ -5,7 +5,7 @@ var cli = require('cli').enable('help', 'status', 'version')
 
 var merge = require('merge'), original, cloned;
 
-cli.setApp('./package.json');
+cli.setApp(__dirname + '/package.json');
 
 cli.parse({
     perpage:  ['p', 'number of repos per page', 'number', 100],

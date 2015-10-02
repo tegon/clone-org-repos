@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "request": "2.55.0",
-    "cli": "0.6.6",
+    "cli": "0.10.0",
     "prompt": "0.2.14",
     "merge": "1.2.0"
   },
