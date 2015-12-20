@@ -14,7 +14,9 @@ cli.parse({
     only: ['o', 'Only clone passed repos, comma separated', 'string'],
     regexp: ['r', 'If true, exclude or only option will be evaluated as a regexp', 'boolean', false],
     username: ['u', 'Username for basic authentication. Required to access github api', 'string'],
-    token: ['token', 'Token authentication. Required to access github api', 'string']
+    token: ['token', 'Token authentication. Required to access github api', 'string'],
+    gitproto: ['gp', 'GitHub access protocol: git, ssh or https', 'string', 'ssh'],
+    gitoptions: ['go', 'Additional git options to pass to git clone command', 'string', '']
 });
 
 getRepositories = function(args, options) {
