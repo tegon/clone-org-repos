@@ -10,7 +10,9 @@ describe('Organization', function() {
             type: 'bar',
             regexp: true,
             only: 'foo-*',
-            exclude: '^bar'
+            exclude: '^bar',
+            gitproto: 'https',
+            gitoptions: '--recurse'
         });
     });
 
@@ -44,6 +46,64 @@ describe('Organization', function() {
         });
         organization.nextPageUrl.should.equal('https://api.github.com/resource?per_page=10&page=2');
         organization.lastPage.should.equal(5);
+    });
+
+    describe('getCloneUrl function', function() {
+        before(function() {
+            repo = {
+                'ssh_url': 'git@github.com:tegon/clone-org-repos.git',
+                'clone_url': 'https://github.com/tegon/clone-org-repos.git',
+                'git_url': 'git:github.com/tegon/clone-org-repos.git'
+            };
+        });
+
+        describe('when protocol is ssh', function() {
+            before(function() {
+                organization = new github.Organization({
+                    gitproto: 'ssh'
+                });
+            });
+
+            it('returns the ssh url', function() {
+                organization.getCloneUrl(repo).should.equals('git@github.com:tegon/clone-org-repos.git');
+            });
+        });
+
+        describe('when protocol is https', function() {
+            before(function() {
+                organization = new github.Organization({
+                    gitproto: 'https'
+                });
+            });
+
+            it('returns the https url', function() {
+                organization.getCloneUrl(repo).should.equals('https://github.com/tegon/clone-org-repos.git');
+            });
+        });
+
+        describe('when protocol is https', function() {
+            before(function() {
+                organization = new github.Organization({
+                    gitproto: 'git'
+                });
+            });
+
+            it('returns the git url', function() {
+                organization.getCloneUrl(repo).should.equals('git:github.com/tegon/clone-org-repos.git');
+            });
+        });
+
+        describe('when protocol is not valid', function() {
+            before(function() {
+                organization = new github.Organization({
+                    gitproto: 'foo'
+                });
+            });
+
+            it('returns the undefined', function() {
+                should.equal(organization.getCloneUrl(repo), undefined);
+            });
+        });
     });
 
     describe('Clone function', function() {
