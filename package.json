@@ -1,7 +1,7 @@
 {
   "name": "clone-org-repos",
   "description": "Clones a github organization repositories",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "homepage": "https://github.com/tegon/clone-org-repos",
   "author": {
     "name": "Leonardo Tegon",
