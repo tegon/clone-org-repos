@@ -3,7 +3,7 @@ Clone github organization repos
 
 [![NPM](https://nodei.co/npm/clone-org-repos.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/clone-org-repos/)
 [![Build Status](https://travis-ci.org/tegon/clone-org-repos.svg?branch=master)](https://travis-ci.org/tegon/clone-org-repos)
-[![Coverage Status](https://coveralls.io/repos/tegon/clone-org-repos/badge.svg?branch=master)](https://coveralls.io/r/tegon/clone-org-repos?branch=master)
+[![Coverage Status](https://coveralls.io/repos/tegon/clone-org-repos/badge.svg?branch=master&service=github)](https://coveralls.io/github/tegon/clone-org-repos?branch=master)
 
 This is a tool to clone all repositories from an github organization.
 This could be helpful if you work at some company, or if you contribute to an open source project.
