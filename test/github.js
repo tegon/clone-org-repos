@@ -11,8 +11,8 @@ describe('Organization', function() {
             regexp: true,
             only: 'foo-*',
             exclude: '^bar',
-            gitproto: 'https',
-            gitoptions: '--recurse'
+            gitaccess: 'https',
+            gitsettings: '--recurse'
         });
     });
 
@@ -60,7 +60,7 @@ describe('Organization', function() {
         describe('when protocol is ssh', function() {
             before(function() {
                 organization = new github.Organization({
-                    gitproto: 'ssh'
+                    gitaccess: 'ssh'
                 });
             });
 
@@ -72,7 +72,7 @@ describe('Organization', function() {
         describe('when protocol is https', function() {
             before(function() {
                 organization = new github.Organization({
-                    gitproto: 'https'
+                    gitaccess: 'https'
                 });
             });
 
@@ -84,7 +84,7 @@ describe('Organization', function() {
         describe('when protocol is https', function() {
             before(function() {
                 organization = new github.Organization({
-                    gitproto: 'git'
+                    gitaccess: 'git'
                 });
             });
 
@@ -96,7 +96,7 @@ describe('Organization', function() {
         describe('when protocol is not valid', function() {
             before(function() {
                 organization = new github.Organization({
-                    gitproto: 'foo'
+                    gitaccess: 'foo'
                 });
             });
 

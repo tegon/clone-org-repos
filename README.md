@@ -37,8 +37,8 @@ Options:
   -u,  --username STRING  Username for basic authentication. Required to
                          access github api
        --token STRING     Token authentication. Required to access github api
-  -gp, --gitproto         Protocol to use in `git clone` command. Can be `ssh` (default), `https` or `git`
-  -go, --gitoptions       Additional parameters to pass to git clone command. Defaults to empty.
+  -a, --gitaccess         Protocol to use in `git clone` command. Can be `ssh` (default), `https` or `git`
+  -s, --gitsettings       Additional parameters to pass to git clone command. Defaults to empty.
        --debug            Show debug information
   -v,  --version          Display the current version
   -h,  --help             Display help and usage details
@@ -108,12 +108,12 @@ cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true # regexp
 ```
 
 ```bash
-cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true --gitproto=git # Clone using git protocol
+cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true --gitaccess=git # Clone using git protocol
 ```
 
 ```bash
 # Clone using git protocol and pass --recurse to `git clone` to clone submodules also
-cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true --gitproto=git --gitoptions="--recurse"
+cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true --gitaccess=git --gitsettings="--recurse"
 ```
 
 ToDo
