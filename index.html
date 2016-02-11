@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Clone-org-repos by tegon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Clone-org-repos</h1>
+      <h2 class="project-tagline">Clone github organization repositories</h2>
+      <a href="https://github.com/tegon/clone-org-repos" class="btn">View on GitHub</a>
+      <a href="https://github.com/tegon/clone-org-repos/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/tegon/clone-org-repos/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="clone-github-organization-repos" class="anchor" href="#clone-github-organization-repos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clone github organization repos</h1>
+
+<p><a href="https://nodei.co/npm/clone-org-repos/"><img src="https://nodei.co/npm/clone-org-repos.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM"></a>
+<a href="https://travis-ci.org/tegon/clone-org-repos"><img src="https://travis-ci.org/tegon/clone-org-repos.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/tegon/clone-org-repos?branch=master"><img src="https://coveralls.io/repos/tegon/clone-org-repos/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a></p>
+
+<p>This is a tool to clone all repositories from an github organization.
+This could be helpful if you work at some company, or if you contribute to an open source project.</p>
+
+<h2>
+<a id="why" class="anchor" href="#why" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why?</h2>
+
+<p>I went through this a few times, I need to clone all repositories from the company where I work, and, in the beginning, this line of Ruby code was sufficient:</p>
+
+<div class="highlight highlight-source-ruby"><pre>curl <span class="pl-k">-</span>s <span class="pl-s"><span class="pl-pds">"</span>https://api.github.com/orgs/ORG_NAME/repos?per_page=100<span class="pl-pds">"</span></span> <span class="pl-k">-</span>u <span class="pl-s"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span> <span class="pl-k">|</span> ruby <span class="pl-k">-</span>rubygems <span class="pl-k">-</span>e <span class="pl-s"><span class="pl-pds">'</span>require "json"; JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}<span class="pl-pds">'</span></span></pre></div>
+
+<p>But things got a little complicated. Some repositories aren't used by me because they are from different times. In this case this tool can be useful because it allows you to pass options to ignore some repositories.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-source-shell"><pre>  cloneorg [OPTIONS] [ORG]</pre></div>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Options:</h2>
+
+<div class="highlight highlight-source-shell"><pre>  -p,  --perpage NUMBER number of repos per page (Default is 100)
+  -t,  --type STRING    can be one of: all, public, private, forks, sources,
+                         member  (Default is all)
+  -e,  --exclude STRING   Exclude passed repos, comma separated
+  -o,  --only STRING      Only clone passed repos, comma separated
+  -r,  --regexp BOOLEAN   If <span class="pl-c1">true</span>, exclude or only option will be evaluated as a
+                         regexp
+  -u,  --username STRING  Username <span class="pl-k">for</span> basic authentication. Required to
+                         access github api
+       --token STRING     Token authentication. Required to access github api
+  -a, --gitaccess         Protocol to use <span class="pl-k">in</span> <span class="pl-s"><span class="pl-pds">`</span>git clone<span class="pl-pds">`</span></span> <span class="pl-c1">command</span>. Can be <span class="pl-s"><span class="pl-pds">`</span>ssh<span class="pl-pds">`</span></span> (default), <span class="pl-s"><span class="pl-pds">`</span>https<span class="pl-pds">`</span></span> or <span class="pl-s"><span class="pl-pds">`</span>git<span class="pl-pds">`</span></span>
+  -s, --gitsettings       Additional parameters to pass to git clone <span class="pl-c1">command</span>. Defaults to empty.
+       --debug            Show debug information
+  -v,  --version          Display the current version
+  -h,  --help             Display <span class="pl-c1">help</span> and usage details</pre></div>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples:</h2>
+
+<p>clones all github/twitter repositories, with HTTP basic authentication. A password will be required</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg twitter -u GITHUB_USERNAME
+cloneorg twitter --username=GITHUB_USERNAME</pre></div>
+
+<p>clones all github/twitter repositories, with an access token provided by Github</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg twitter --token GITHUB_TOKEN</pre></div>
+
+<p>If an environment variable <code>GITHUB_TOKEN</code> is set, it will be used.</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-k">export</span> GITHUB_TOKEN=<span class="pl-s"><span class="pl-pds">'</span>YOUR_GITHUB_API_TOKEN<span class="pl-pds">'</span></span></pre></div>
+
+<p>Add a -p or --perpage option to paginate response</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg mozilla --token=GITHUB_TOKEN -p 10</pre></div>
+
+<h2>
+<a id="exclude-and-only-options" class="anchor" href="#exclude-and-only-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exclude and Only options</h2>
+
+<p>If you only need some repositories, you can pass -o or --only with their names</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg angular --token=GITHUB_TOKEN -o angular</pre></div>
+
+<p>This can be an array to</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg angular --token=GITHUB_TOKEN -o angular,material,bower-angular-i18n</pre></div>
+
+<p>This can also be an regular expression, with -r or --regexp option set to true.</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg marionettejs --token=GITHUB_TOKEN -o ^backbone -r <span class="pl-c1">true</span></pre></div>
+
+<p>The same rules apply to exclude options</p>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg jquery --token=GITHUB_TOKEN -e css-framework <span class="pl-c"># simple</span></pre></div>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg emberjs --token=GITHUB_TOKEN -e website,examples <span class="pl-c"># array</span></pre></div>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg gruntjs --token=GITHUB_TOKEN -e <span class="pl-smi">$-</span>docs -r <span class="pl-c1">true</span> <span class="pl-c"># regexp</span></pre></div>
+
+<div class="highlight highlight-source-shell"><pre>cloneorg gruntjs --token=GITHUB_TOKEN -e <span class="pl-smi">$-</span>docs -r <span class="pl-c1">true</span> --gitaccess=git <span class="pl-c"># Clone using git protocol</span></pre></div>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># Clone using git protocol and pass --recurse to `git clone` to clone submodules also</span>
+cloneorg gruntjs --token=GITHUB_TOKEN -e <span class="pl-smi">$-</span>docs -r <span class="pl-c1">true</span> --gitaccess=git --gitsettings=<span class="pl-s"><span class="pl-pds">"</span>--recurse<span class="pl-pds">"</span></span></pre></div>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ToDo</h2>
+
+<ul>
+<li>Progress bar while cloning repos</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/tegon/clone-org-repos">Clone-org-repos</a> is maintained by <a href="https://github.com/tegon">tegon</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-47117243-10");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
