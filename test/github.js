@@ -2,6 +2,19 @@ var should = require('chai').should()
     , sinon = require('sinon')
     , github = require('../lib/github');
 
+
+describe('Organization.prototype.BASE_URI', function() {
+  describe('When the org is hosted on github entriprise', function () {
+    xit('reads the uri from an environment variable', function() {
+      process.env.ENTERPRISE_DOMAIN = 'foobar';
+
+      url = github.Organization.prototype.BASE_URI;
+
+      url.should.equal('foobar');
+    })
+  })
+});
+
 describe('Organization', function() {
     before(function() {
         organization = new github.Organization({
