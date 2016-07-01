@@ -16,7 +16,7 @@ I went through this a few times, I need to clone all repositories from the compa
 curl -s "https://api.github.com/orgs/ORG_NAME/repos?per_page=100" -u "username" | ruby -rubygems -e 'require "json"; JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
 ```
 
-But things got a little complicated. Some repositories aren't used by me because they are from different times. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
+But things got a little complicated. Some repositories aren't used by me because they are from different teams. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
 
 Usage
 ---
