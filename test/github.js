@@ -220,5 +220,34 @@ describe('Organization', function() {
                 });
             });
         });
+
+        describe('directory check mode', function() {
+            before(function() {
+                organization = new github.Organization({});
+                organization.existingDirs = ['foozin', 'barzin'];
+
+                cloneSpy = sinon.stub(organization, 'executeCloneCommand').returns(undefined);
+            });
+
+            it('executes clone command', function() {
+                var repo = { name: 'barbaz' };
+                organization.clone(repo);
+
+                repo = { name: 'bar' };
+                organization.clone(repo);
+
+                cloneSpy.callCount.should.equals(2);
+            });
+
+            it('does not execute clone command', function() {
+                var repo = { name: 'foozin' };
+                organization.clone(repo);
+
+                repo = { name: 'barzin' };
+                organization.clone(repo);
+
+                cloneSpy.callCount.should.equals(0);
+            });
+        });
     });
 });
