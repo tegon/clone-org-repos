@@ -12,6 +12,7 @@ cli.parse({
     type: ['t', 'can be one of: all, public, private, forks, sources, member', 'string', 'all'],
     exclude: ['e', 'Exclude passed repos, comma separated', 'string'],
     only: ['o', 'Only clone passed repos, comma separated', 'string'],
+    directories: ['d', 'Check for existing directories before cloning', 'boolean', false],
     regexp: ['r', 'If true, exclude or only option will be evaluated as a regexp', 'boolean', false],
     username: ['u', 'Username for basic authentication. Required to access github api', 'string'],
     token: ['token', 'Token authentication. Required to access github api', 'string'],
