@@ -26,16 +26,11 @@ getRepositories = function(args, options) {
     var validatorResult = optionsValidator.execute(gitOptions);
 
     if (validatorResult.valid) {
-        var callback = function(err, success) {
-            if (err) {
-                cli.info('error executing request ', err);
-            } else {
-                if (this.currentPage <= this.getLastPage()) {
-                    this.getRepositories(callback);
-                }
+        var callback = function() {
+            if ( this.currentPage <= this.getLastPage () ) {
+                this.getRepositories ( callback );
             }
-        }
-
+        };
         organization.getRepositories(callback);
     } else {
         cli.error(validatorResult.message);
