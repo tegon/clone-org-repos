@@ -10,13 +10,16 @@ This could be helpful if you work at some company, or if you contribute to an op
 
 ## Why?
 
-I went through this a few times, I need to clone all repositories from the company where I work, and, in the beginning, this line of Ruby code was sufficient:
+I went through this a few times, I needed to clone all repositories from the company where I work, and, in the beginning, this line of Ruby code was sufficient:
 
 ```ruby
 curl -s "https://api.github.com/orgs/ORG_NAME/repos?per_page=100" -u "username" | ruby -rubygems -e 'require "json"; JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
 ```
 
-But things got a little complicated. Some repositories aren't used by me because they are from different teams. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
+But things got a little complicated. Some repositories were not used by me because they are from different teams. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
+
+Years later, [Dale Lotts](http://github.com/dalelotts) more features so he made several changes, like showing progress and skipping 
+existing repositories.
 
 ## Usage
 
@@ -40,14 +43,14 @@ cloneorg [OPTIONS] [ORG]
 | -e| --exclude |Space delimited list of repository names to exclude. |array || []
 | -f| --fetch |Fetch (not pull) existing repositories. -ff to skip cloning and fetch only. | count || []
 | -g| --group |GitHub organizations or users. | string | orgs, users |orgs
-| -i| --onlyRegExp | Regular expression that matches the repository names to clone. | string | | /.*/
+| -i| --onlyRegExp | Regular expression that matches the repository names to clone. | string | | ".*"
 | -j| --json | Path to JSON config file
 | -n| --perPage |Number of repos per page |number |  |100
 | -o| --only | Space delimited list of the repository names to clone. |array|  | []
 | -p| --protocol | GitHub access protocol. |string |  git, ssh, https | ssh
 | -r| --type | Type of repositories to include. |string |all, public, private, forks, sources, member | all
 | -s| --fetchSettings |Space delimited list of additional options to pass to git fetch command. | array || --all
-| -x| --excludeRegExp |Regular expression that matches the repository names to exclude. | string || /\$^/
+| -x| --excludeRegExp |Regular expression that matches the repository names to exclude. | string || "$^"
 | -h| --help | Show help 
 | -v| --version |Show version number
 
@@ -81,12 +84,12 @@ npx clone-org-repos facebook --token GITHUB_TOKEN
 
 ```
 
-**Nota Bene:** If the current folder contains a folder with the same name as a repository to be clones, the repository 
+**Nota Bene:** If the current folder contains a folder with the same name as a repository to be cloned, the repository 
 will be skipped. You cannot clone into an existing non-empty folder. 
 
 ### Restarting
 
-If the process stops, or internet connectivity is dropped, just run the same command again it will automatically
+If the process stops, or internet connectivity is dropped, just run the same command again and it will automatically
 skip any previously cloned repositories. 
 
 For example, if you start to clone the `angular` organization, it might print something like the following:
@@ -179,15 +182,24 @@ Specify the protocol to use when cloning repositories with the `--protocol` or `
 Valid values are `ssh`, `https` or `git`. `ssh` is the default.
 
 ```bash
-npx clone-org-repos gruntjs -t GITHUB_TOKEN --gitaccess=git # Clone using git protocol
+npx clone-org-repos gruntjs -t GITHUB_TOKEN --protocol git # Clone using git protocol
 ```
 
 ### Clone Settings
 
-Specify additional `git clone` options with the `--gitsettings` or `-s` option.
+Specify additional `git clone` options with the `--cloneSettings` or `-c` option.
 
 
 ```bash
-# Clone using git protocol and pass --recurse to `git clone` to clone submodules also
-npx clone-org-repos gruntjs -t GITHUB_TOKEN --gitsettings "--recurse"
+# Clone using git protocol and pass `--recurse` to `git clone` to clone submodules also
+npx clone-org-repos gruntjs -t GITHUB_TOKEN --cloneSettings "--recurse"
+```
+
+### Fetch Settings
+
+Specify additional `git fetch` options with the `--fetchSettings` or `-s` option.
+
+```bash
+# Fetch only (skip cloning) `--depth=1` to `git fetch`
+npx clone-org-repos gruntjs -t GITHUB_TOKEN --ff --fetchSettings "--depth=1"
 ```
