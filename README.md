@@ -41,7 +41,7 @@ cloneorg [OPTIONS] [ORG]
 | -c| --cloneSettings |Space delimited list of additional options to pass to git clone command. |array || []
 | -d| --debug |Enable debug mode. -dd to enable verbose mode. | count || 0
 | -e| --exclude |Space delimited list of repository names to exclude. |array || []
-| -f| --fetch |Fetch (not pull) existing repositories. -ff to skip cloning and fetch only. | count || []
+| -f| --fetch |Fetch (not pull) existing repositories. -ff to skip cloning and fetch only. | count || 0
 | -g| --group |GitHub organizations or users. | string | orgs, users |orgs
 | -i| --onlyRegExp | Regular expression that matches the repository names to clone. | string | | ".*"
 | -j| --json | Path to JSON config file

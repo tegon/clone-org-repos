@@ -95,7 +95,7 @@ const options = yargs
   })
   .option('f', {
     alias: 'fetch',
-    default: [],
+    default: 0,
     demandOption: false,
     describe: 'Fetch (not pull) existing repositories. -ff to skip cloning and fetch only.',
     type: 'boolean',
