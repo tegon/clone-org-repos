@@ -1,5 +1,5 @@
-Clone github organization repos
-===
+# Clone github repositories
+
 
 [![NPM](https://nodei.co/npm/clone-org-repos.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/clone-org-repos/)
 [![Build Status](https://travis-ci.org/tegon/clone-org-repos.svg?branch=master)](https://travis-ci.org/tegon/clone-org-repos)
@@ -8,8 +8,8 @@ Clone github organization repos
 This is a tool to clone all repositories from an github organization.
 This could be helpful if you work at some company, or if you contribute to an open source project.
 
-Why?
----
+## Why?
+
 I went through this a few times, I need to clone all repositories from the company where I work, and, in the beginning, this line of Ruby code was sufficient:
 
 ```ruby
@@ -18,105 +18,176 @@ curl -s "https://api.github.com/orgs/ORG_NAME/repos?per_page=100" -u "username" 
 
 But things got a little complicated. Some repositories aren't used by me because they are from different teams. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
 
-Usage
----
-```bash
-  cloneorg [OPTIONS] [ORG]
+## Usage
+
+```shell
+npx clone-org-repos [OPTIONS] [ORG]
+```
+or install globally
+
+```shell
+npm install -g clone-org-repos
+cloneorg [OPTIONS] [ORG]
 ```
 
-Options:
----
-```bash
-  -p,  --perpage NUMBER number of repos per page (Default is 100)
-  -t,  --type STRING    can be one of: all, public, private, forks, sources,
-                         member  (Default is all)
-  -e,  --exclude STRING   Exclude passed repos, comma separated
-  -o,  --only STRING      Only clone passed repos, comma separated
-  -r,  --regexp BOOLEAN   If true, exclude or only option will be evaluated as a
-                         regexp
-  -u,  --username STRING  Username for basic authentication. Required to
-                         access github api
-       --token STRING     Token authentication. Required to access github api
-  -a, --gitaccess         Protocol to use in `git clone` command. Can be `ssh` (default), `https` or `git`
-  -s, --gitsettings       Additional parameters to pass to git clone command. Defaults to empty.
-       --debug            Show debug information
-  -v,  --version          Display the current version
-  -h,  --help             Display help and usage details
+### Options:
+
+| Short option | long option | Description | Data type | Choices | Default |
+| ---   | --- | --- | --- | --- | --- | 
+| -t| --token |GitHub access Token.  [REQUIRED] | string  |
+| -c| --cloneSettings |Space delimited list of additional options to pass to git clone command. |array || []
+| -d| --debug |Enable debug mode. -dd to enable verbose mode. | count || 0
+| -e| --exclude |Space delimited list of repository names to exclude. |array || []
+| -f| --fetch |Fetch (not pull) existing repositories. -ff to skip cloning and fetch only. | count || []
+| -g| --group |GitHub organizations or users. | string | orgs, users |orgs
+| -i| --onlyRegExp | Regular expression that matches the repository names to clone. | string | | /.*/
+| -j| --json | Path to JSON config file
+| -n| --perPage |Number of repos per page |number |  |100
+| -o| --only | Space delimited list of the repository names to clone. |array|  | []
+| -p| --protocol | GitHub access protocol. |string |  git, ssh, https | ssh
+| -r| --type | Type of repositories to include. |string |all, public, private, forks, sources, member | all
+| -s| --fetchSettings |Space delimited list of additional options to pass to git fetch command. | array || --all
+| -x| --excludeRegExp |Regular expression that matches the repository names to exclude. | string || /\$^/
+| -h| --help | Show help 
+| -v| --version |Show version number
+
+**Nota Bene:** you can specify `--only`, `--onlyRegEx`, `--exclude`, and `--excludeRexEx` all (or some) on the same command 
+and they will be logically `anded` together. However, it is unlikely that you need more than one of them. 
+
+## Examples:
+
+clones all repositories. An GitHub access token (`--token` or `-t`) is always required. 
+
+```shell
+npx clone-org-repos angular --token GITHUB_TOKEN
+
+INFO: Requesting github repositories for angular with url https://api.github.com/orgs/angular/repos?per_page=100&type=all
+INFO: Requesting github repositories for angular with url https://api.github.com/organizations/139426/repos?per_page=100&type=all&page=2
+INFO: 1 of 192 - .github
+INFO: 2 of 192 - a
+INFO: 3 of 192 - angular
+INFO: 4 of 192 - angular-bazel-example
+INFO: 5 of 192 - angular-carousel
+INFO: 6 of 192 - angular-cli
+...
+
+
 ```
 
-Examples:
----
+or 
 
-clones all github/twitter repositories, with HTTP basic authentication. A password will be required
+```shell 
+npx clone-org-repos facebook --token GITHUB_TOKEN 
 
-```bash
-cloneorg twitter -u GITHUB_USERNAME
-cloneorg twitter --username=GITHUB_USERNAME
 ```
 
-clones all github/twitter repositories, with an access token provided by Github
+**Nota Bene:** If the current folder contains a folder with the same name as a repository to be clones, the repository 
+will be skipped. You cannot clone into an existing non-empty folder. 
 
-```bash
-cloneorg twitter --token GITHUB_TOKEN
+### Restarting
+
+If the process stops, or internet connectivity is dropped, just run the same command again it will automatically
+skip any previously cloned repositories. 
+
+For example, if you start to clone the `angular` organization, it might print something like the following:
+```shell 
+INFO: 1 of 192 - .github
+...
 ```
 
-If an environment variable `GITHUB_TOKEN` is set, it will be used.
+If you terminate the process after 10 repositories are cloned, the new output will be something like the following:
 
-```bash
+```shell 
+INFO: 1 of 182 - angular-cli
+...
+```
+
+The program will automatically skip previously cloned repositories.
+
+### Fetching existing repositories
+
+Existing folders are automatically skipped, but this program will `fetch` the changes for those repositories if you 
+set the `-f` option. (folders that are not `git` repositories are skipped)
+
+Fetching is an "all-or-nothing operation". You either fetch all existing or none, and there is no way to restart from where 
+you left off.
+
+**Nota Bene:** The `--only`, `--onlyRegEx`, `--exclude`, and `--excludeRexEx` options are also used for fetching.
+
+### Environment Variable
+
+If an environment variable `GITHUB_TOKEN` is set, it will automatically be used as the GitHub access token.
+
+```shell
 export GITHUB_TOKEN='YOUR_GITHUB_API_TOKEN'
+npx clone-org-repos mozilla
 ```
 
-Add a -p or --perpage option to paginate response
+Add a `-p` or `--perpage` option to paginate response
 
 ```bash
-cloneorg mozilla --token=GITHUB_TOKEN -p 10
+npx clone-org-repos mozilla -t GITHUB_TOKEN -p 10
 ```
 
-Exclude and Only options
----
+You can verify the environment variable is being used by running `npx clone-org-repos` and you should see the token 
+as the default value for the `--token` option
 
-If you only need some repositories, you can pass -o or --only with their names
+### Only option
+
+If you only need some repositories, you can pass `--only` or `-o` a space delimited list of repository names to include.
 
 ```bash
-cloneorg angular --token=GITHUB_TOKEN -o angular
+npx clone-org-repos angular -t GITHUB_TOKEN -o angular material bower-angular-i18n
+```
+**Nota Bena:** Just use `git clone <repository-url>` if you only need one repository cloned.
+
+### Only Regular Expression option
+
+This can also be an regular expression, with `--onlyRegEx` or `-i`.
+
+```bash
+npx clone-org-repos marionettejs -t GITHUB_TOKEN -i ^backbone
+
+INFO: 1 of 9 - backbone-emulate-collection
+INFO: 2 of 9 - backbone-metal
+INFO: 3 of 9 - backbone.babysitter
+...
 ```
 
-This can be an array to
+### Exclude option
+If you want to exclude only certain repositories, you can pass `--exclude` or `-e` a space delimited list of repository names to exclude.
+
 
 ```bash
-cloneorg angular --token=GITHUB_TOKEN -o angular,material,bower-angular-i18n
-```
-
-This can also be an regular expression, with -r or --regexp option set to true.
-
-```bash
-cloneorg marionettejs --token=GITHUB_TOKEN -o ^backbone -r true
-```
-
-The same rules apply to exclude options
-
-```bash
-cloneorg jquery --token=GITHUB_TOKEN -e css-framework # simple
-```
-
-```bash
-cloneorg emberjs --token=GITHUB_TOKEN -e website,examples # array
-```
-
-```bash
-cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true # regexp
+npx clone-org-repos jquery -t GITHUB_TOKEN -e css-framework # <-- Exclude a single repositry
 ```
 
 ```bash
-cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true --gitaccess=git # Clone using git protocol
+npx clone-org-repos emberjs -t GITHUB_TOKEN -e website examples # <-- Exclude a multiple repositries
 ```
+
+#### Exclude Regular Expression option
+
+```bash
+npx clone-org-repos gruntjs -t GITHUB_TOKEN -x -docs$ # -x is a regular expression
+```
+
+### Git protocol option
+
+Specify the protocol to use when cloning repositories with the `--protocol` or `-p` option.
+
+Valid values are `ssh`, `https` or `git`. `ssh` is the default.
+
+```bash
+npx clone-org-repos gruntjs -t GITHUB_TOKEN --gitaccess=git # Clone using git protocol
+```
+
+### Clone Settings
+
+Specify additional `git clone` options with the `--gitsettings` or `-s` option.
+
 
 ```bash
 # Clone using git protocol and pass --recurse to `git clone` to clone submodules also
-cloneorg gruntjs --token=GITHUB_TOKEN -e $-docs -r true --gitaccess=git --gitsettings="--recurse"
+npx clone-org-repos gruntjs -t GITHUB_TOKEN --gitsettings "--recurse"
 ```
-
-ToDo
----
-
-- Progress bar while cloning repos
