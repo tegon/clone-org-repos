@@ -1,6 +1,6 @@
 const yargs = require('yargs')
 const fs = require('fs')
-const getFilter = require('./lib/Filter')
+const getFilters = require('./lib/Filter')
 const GitHub = require('./lib/GitHub')
 const path = require('path')
 
@@ -144,9 +144,12 @@ options.VERBOSE = function () {
 
 options.cwd = process.cwd()
 options.organization = options._[0]
-options.repositoryFilter = getFilter(options)
 options.existing = getExisting(options.cwd)
 options.existingGitRepos = options.existing.filter(isGitRepo(options.cwd)).map((name) => ({ name }))
+
+const filters = getFilters(options)
+options.cloneFilter = filters.cloneFilter
+options.fetchFilter = filters.fetchFilter
 
 options.VERBOSE(options)
 
