@@ -45,14 +45,14 @@ cloneorg [OPTIONS] [ORG]
 | -e| --exclude |Space delimited list of repository names to exclude. |array || []
 | -f| --fetch |Fetch (not pull) existing repositories. -ff to skip cloning and fetch only. | count || 0
 | -g| --group |GitHub organizations or users. | string | orgs, users |orgs
-| -i| --onlyRegExp | Regular expression that matches the repository names to clone. | string | | ".*"
+| -i| --onlyRegExp | Regular expression that matches the repository names to clone. | string | | .*
 | -j| --json | Path to JSON config file
 | -n| --perPage |Number of repos per page |number |  |100
 | -o| --only | Space delimited list of the repository names to clone. |array|  | []
 | -p| --protocol | GitHub access protocol. |string |  git, ssh, https | ssh
 | -r| --type | Type of repositories to include. |string |all, public, private, forks, sources, member | all
 | -s| --fetchSettings |Space delimited list of additional options to pass to git fetch command. | array || --all
-| -x| --excludeRegExp |Regular expression that matches the repository names to exclude. | string || "$^"
+| -x| --excludeRegExp |Regular expression that matches the repository names to exclude. | string || $^
 | -h| --help | Show help 
 | -v| --version |Show version number
 
