@@ -10,15 +10,17 @@ This could be helpful if you work at some company, or if you contribute to an op
 
 ## Why?
 
-I went through this a few times, I needed to clone all repositories from the company where I work, and, in the beginning, this line of Ruby code was sufficient:
+I went through this a few times, I needed to clone all repositories from the company where I work, and, in the beginning, 
+this line of Ruby code was sufficient:
 
 ```ruby
 curl -s "https://api.github.com/orgs/ORG_NAME/repos?per_page=100" -u "username" | ruby -rubygems -e 'require "json"; JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
 ```
 
-But things got a little complicated. Some repositories were not used by me because they are from different teams. In this case this tool can be useful because it allows you to pass options to ignore some repositories.
+But things got a little complicated. Some repositories were not used by me because they are from different teams. 
+In this case this tool can be useful because it allows you to pass options to ignore some repositories.
 
-Years later, [Dale Lotts](http://github.com/dalelotts) more features so he made several changes, like showing progress and skipping 
+Years later, [Dale Lotts](http://github.com/dalelotts) added more features so he made several changes, like showing progress and skipping 
 existing repositories.
 
 ## Usage
@@ -158,7 +160,8 @@ INFO: 3 of 9 - backbone.babysitter
 ```
 
 ### Exclude option
-If you want to exclude only certain repositories, you can pass `--exclude` or `-e` a space delimited list of repository names to exclude.
+If you want to exclude only certain repositories, you can pass `--exclude` or `-e` a space delimited list of repository 
+names to exclude.
 
 
 ```bash
