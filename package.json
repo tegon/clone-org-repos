@@ -1,8 +1,12 @@
 {
   "name": "clone-org-repos",
   "description": "Clones a github organization repositories",
-  "version": "0.2.6",
+  "version": "1.0.0",
   "homepage": "https://github.com/tegon/clone-org-repos",
+  "engines": {
+    "node": ">=12"
+  },
+  "license": "MIT",
   "author": {
     "name": "Leonardo Tegon",
     "url": "https://github.com/tegon"
@@ -17,46 +21,51 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/tegon/clone-org-repos/blob/master/LICENSE-MIT"
+      "url": "https://github.com/tegon/clone-org-repos/blob/master/LICENSE"
     }
   ],
   "keywords": [
     "cli",
-    "command line",
-    "git",
-    "github",
-    "clone",
-    "git clone",
+    "clone organization repositories",
     "clone repositories",
-    "github organization",
+    "clone user repositories",
+    "clone",
+    "command line",
+    "git clone",
+    "git",
     "github org",
+    "github organization",
+    "github users",
+    "github",
     "org repositories",
-    "organization repositories",
-    "clone organization repositories"
+    "organization repositories"
   ],
   "preferGlobal": true,
   "bin": {
     "cloneorg": "./bin/cloneorg"
   },
   "main": "index.js",
-  "engines": {
-    "node": ">=0.8"
-  },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test/*",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+    "lint": "eslint --ext .js .",
+    "lint:fix": "npm run-script lint -- --fix",
+    "test": "jest"
   },
   "dependencies": {
-    "request": "2.74.0",
-    "cli": "0.10.0",
-    "prompt": "0.2.14",
-    "merge": "1.2.0"
+    "async": "^3.1.1",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
+    "ramda": "^0.27.0",
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
-    "coveralls": "^2.11.2",
-    "istanbul": "^0.3.14",
-    "mocha": "^2.2.5",
-    "sinon": "^1.14.1"
+    "coveralls": "^3.0.9",
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.7.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.1.0"
   }
 }

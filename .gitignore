@@ -54,3 +54,5 @@ TODO.md
 
 # Coverage
 coverage/
+
+.nyc_output
